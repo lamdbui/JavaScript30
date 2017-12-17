@@ -68,6 +68,16 @@
     audio.play();
     key.classList.add('playing');
   });
+
+  function removeTransition(e) {
+    // we want to skip all transitions that isn't transform
+    if (e.propertyName !== 'transform') return;
+
+    this.classList.remove('playing');
+  }
+
+  const keys = document.querySelectorAll('.key');
+  keys.forEach(key => key.addEventListener('transitionend', removeTransition));
 </script>
 
 
