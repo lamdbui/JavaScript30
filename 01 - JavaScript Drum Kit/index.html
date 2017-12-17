@@ -58,7 +58,7 @@
   <audio data-key="76" src="sounds/tink.wav"></audio>
 
 <script>
-  window.addEventListener('keydown', function(e) {
+  function playSound(e) {
     const audio = document.querySelector(`audio[data-key="${e.keyCode}"]`);
     const key = document.querySelector(`.key[data-key="${e.keyCode}"]`);
     // stop the function from running if no element exists
@@ -67,7 +67,7 @@
     audio.currentTime = 0;
     audio.play();
     key.classList.add('playing');
-  });
+  }
 
   function removeTransition(e) {
     // we want to skip all transitions that isn't transform
@@ -78,6 +78,8 @@
 
   const keys = document.querySelectorAll('.key');
   keys.forEach(key => key.addEventListener('transitionend', removeTransition));
+
+  window.addEventListener('keydown', playSound);
 </script>
 
 
