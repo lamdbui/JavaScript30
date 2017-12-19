@@ -63,7 +63,10 @@
     const inputs = document.querySelectorAll('.controls input');
 
     function handleUpdate() {
-      console.log(this.value);
+      // default to '' to ensure we don't append with undefined
+      const suffix = this.dataset.sizing || '';
+      // setting the CSS variable property here!
+      document.documentElement.style.setProperty(`--${this.name}`, this.value + suffix);
     }
 
     inputs.forEach(input => {
