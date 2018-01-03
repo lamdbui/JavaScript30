@@ -9,6 +9,9 @@
 
 <script>
 
+const LINE_WIDTH_THRESHOLD = 100;
+const LINE_WIDTH_START_SIZE = LINE_WIDTH_THRESHOLD / 2;
+
 const canvas = document.querySelector('#draw');
 const ctx = canvas.getContext('2d');
 
@@ -18,15 +21,19 @@ canvas.height = window.innerHeight;
 ctx.strokeStyle = '#BADA55';
 ctx.lineJoin = 'round';
 ctx.lineCap = 'round';
+ctx.lineWidth = LINE_WIDTH_START_SIZE;
 
 // flag to check cursor is actively drawing
 let isDrawing = false;
 let lastX = 0;
 let lastY = 0;
+let hue = 0;
+let direction = true;
 
 function draw(e) {
   if (!isDrawing) return;
   console.log(e);
+  ctx.strokeStyle = `hsl(${hue}, 100%, 50%)`;
   ctx.beginPath();
   // start from
   ctx.moveTo(lastX, lastY);
@@ -35,6 +42,21 @@ function draw(e) {
   ctx.stroke();
   // reset our lastX/Y
   [lastX, lastY] = [e.offsetX, e.offsetY];
+  // add incremental color changing
+  hue++;
+  if (hue >= 360) {
+    hue = 0;
+  }
+
+  // increase and decrease stroke size after hitting a threshold
+  if (ctx.lineWidth >= LINE_WIDTH_THRESHOLD || ctx.lineWidth <= 1) {
+    direction = !direction;
+  }
+  if (direction) {
+    ctx.lineWidth++;
+  } else {
+    ctx.lineWidth--;
+  }
 }
 
 // NOTE: this must happen before the mousemove event to ensure that the line
