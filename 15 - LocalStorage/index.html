@@ -53,15 +53,27 @@
     platesList.innerHTML = plates.map((plate, i) => {
       return `
         <li>
-          <input type="checkbox" data-index="${i}" id="item{i}" ${plate.done ? 'checked' : ''} />
-          <label for="item{i}">${plate.text}</label>
+          <input type="checkbox" data-index=${i} id="item${i}" ${plate.done ? 'checked' : ''} />
+          <label for="item${i}">${plate.text}</label>
         </li>
       `;
     }).join('');
   }
 
-  addItems.addEventListener('submit', addItem);
+  function toggleDone(e) {
+    // skip unless 'input'
+    if (!e.target.matches('input')) {
+      return;
+    }
+    const index = e.target.dataset.index;
+    items[index].done = !items[index].done;
+    localStorage.setItem('items', JSON.stringify(items));
+    populateList(items, itemsList);
+    // console.log(e.target.dataset.index);
+  }
 
+  addItems.addEventListener('submit', addItem);
+  itemsList.addEventListener('click', toggleDone);
   populateList(items, itemsList);
 
 </script>
