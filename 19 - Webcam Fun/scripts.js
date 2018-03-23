@@ -33,4 +33,21 @@ function paintToCanvas() {
   }, 16);
 }
 
+function takePhoto() {
+  // play the photo sound
+  snap.currentTime = 0;
+  snap.play();
+
+  // capture the image out of the canvas
+  const data = canvas.toDataURL('image/jpeg');
+  const link = document.createElement('a');
+  link.href = data;
+  link.setAttribute('download', 'handsome');
+  link.textContent = 'Download Image';
+  link.innerHTML = `<img src="${data}" alt="Handsome Man" />`;
+  strip.insertBefore(link, strip.firstChild);
+}
+
+video.addEventListener('canplay', paintToCanvas);
+
 getVideo();
