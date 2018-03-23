@@ -10,8 +10,27 @@ function getVideo() {
       // console.log(localMediaStream);
       // need to convert video into something that the video.src can understand (URL)
       video.src = window.URL.createObjectURL(localMediaStream);
+      // video.src = HTMLMediaElement.srcObject(localMediaStream);
       video.play();
+    })
+    .catch(error => {
+      console.error('Y U DENY WEBCAM?', err);
     });
+}
+
+function paintToCanvas() {
+  const width = video.videoWidth;
+  const height = video.videoHeight;
+  console.log(width, height);
+
+  // make sure the width and height match the canvas
+  canvas.width = width;
+  canvas.height = height;
+
+  // capture image
+  return setInterval(() => {
+    ctx.drawImage(video, 0, 0, width, height);
+  }, 16);
 }
 
 getVideo();
