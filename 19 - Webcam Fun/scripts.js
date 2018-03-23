@@ -34,6 +34,8 @@ function paintToCanvas() {
     // do some filtering
     // pixels = redEffect(pixels);
     pixels = rgbSplit(pixels);
+    // add ghosting effect
+    ctx.globalAlpha = 0.1;
     ctx.putImageData(pixels, 0, 0);
   }, 16);
 }
