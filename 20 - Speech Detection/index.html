@@ -29,6 +29,9 @@
     console.log(transcript);
   });
 
+  // start up again after it finishes listening to a statement
+  recognition.addEventListener('end', recognition.start);
+
   recognition.start();
 
 </script>
