@@ -37,9 +37,10 @@
   }
 </style>
 
-<button></button>
+<button>Only clickable once</button>
 <script>
   const divs = document.querySelectorAll('div');
+  const button = document.querySelector('button');
 
   function logText(e) {
     console.log(this.classList.value);
@@ -48,8 +49,15 @@
 
   divs.forEach(div => div.addEventListener('click', logText,
     // { capture: true }   // stop downward propogation
-    { capture: false }  // default behavior
+    {
+      capture: false,     // default behavior
+      one: true           // only run once (e.g. unbind after first click)
+    }
   ));
+
+  button.addEventListener('click', () => {
+    console.log('Click!!!');
+  }, { once: true });
 </script>
 </body>
 </html>
